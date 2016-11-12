@@ -5,6 +5,10 @@
     <title>校会新闻</title>
 </head>
 <body>
-<p>newslists</p>
+<ul>
+    {% for news in news_lists %}
+        <li><a href="{% url 'news' news.id %}">{{ news.title }}</a></li>
+    {% endfor %}
+</ul>
 </body>
 </html>

@@ -1,4 +1,12 @@
+# coding utf-8
 from django.db import models
+
+
+class Section(models.Model):
+    name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
 
 
 class News(models.Model):
@@ -9,9 +17,8 @@ class News(models.Model):
     subdate = models.DateField()
     readnum = models.IntegerField()
 
-
-class Section(models.Model):
-    name = models.CharField(max_length=10)
+    def __str__(self):
+        return self.title
 
 
 class Source(models.Model):
@@ -20,7 +27,13 @@ class Source(models.Model):
     # true = 文 false = 图
     job = models.BooleanField()
 
+    def __str__(self):
+        return self.name
+
 
 class Image(models.Model):
     id = models.ForeignKey(News, primary_key=True)
     image = models.ImageField()
+
+    def __str__(self):
+        return self.image
