@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'news',
         'USER': 'root',
         'PASSWORD': 'forever',
-        'HOST': '127.0.0.1',
+        'HOST': '119.29.133.102',
         'PORT': '3306',
     }
 }
