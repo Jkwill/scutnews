@@ -13,7 +13,7 @@ class News(models.Model):
     title = models.CharField(max_length=20)
     subtitle = models.CharField(max_length=20)
     tag = models.ForeignKey(Section)
-    article = models.TextField()
+    article = models.CharField(max_length=100)
     subdate = models.DateField()
     readnum = models.IntegerField()
 
@@ -22,7 +22,7 @@ class News(models.Model):
 
 
 class Source(models.Model):
-    id = models.ForeignKey(News, primary_key=True)
+    tid = models.ForeignKey(News)
     name = models.CharField(max_length=10)
     # true = 文 false = 图
     job = models.BooleanField()
@@ -31,9 +31,9 @@ class Source(models.Model):
         return self.name
 
 
-class Image(models.Model):
-    id = models.ForeignKey(News, primary_key=True)
-    image = models.ImageField()
-
-    def __str__(self):
-        return self.image
+# class Image(models.Model):
+#     id = models.ForeignKey(News, primary_key=True)
+#     image = models.ImageField()
+#
+#     def __str__(self):
+#         return self.image

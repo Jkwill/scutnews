@@ -5,7 +5,11 @@ from news.models import News
 
 
 def newslists(request):
-    news_list = News.objects.all()
+    length = News.objects.count()
+    if length > 20:
+        news_list = News.objects.all()[length-20:length]
+    else:
+        news_list = News.objects.all()
     return render(request, 'newslists.html', {'news_lists': news_list})
 
 
@@ -14,3 +18,5 @@ def news(request, news_id):
     return render(request, 'news.html', {'news': news})
 
 
+def editnews(request):
+    return render(request, 'edit/edit.html')
