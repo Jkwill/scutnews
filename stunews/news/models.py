@@ -13,7 +13,7 @@ class News(models.Model):
     title = models.CharField(max_length=20)
     subtitle = models.CharField(max_length=20)
     tag = models.ForeignKey(Section)
-    article = models.CharField(max_length=100)
+    article = models.TextField(max_length=100)
     subdate = models.DateField()
     readnum = models.IntegerField()
 
@@ -31,9 +31,9 @@ class Source(models.Model):
         return self.name
 
 
-# class Image(models.Model):
-#     id = models.ForeignKey(News, primary_key=True)
-#     image = models.ImageField()
-#
-#     def __str__(self):
-#         return self.image
+class Image(models.Model):
+    mid = models.ForeignKey(News)
+    image = models.ImageField()
+
+    def __str__(self):
+         return self.image
