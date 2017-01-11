@@ -2,6 +2,8 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from . import views
+from .views import getNews
+
 
 urlpatterns = [
     url(r'^$', views.newslists, name='homepage'),
@@ -12,5 +14,7 @@ urlpatterns = [
                                                     'post_change_redirect': r'/scutnews/edit'
         }, name='psdchange'),
     url(r'^exit/$',auth_views.logout, {'template_name': 'edit/login.html'}, name='logout'),
-    url(r'^edit/$', views.editnews, name='edit')
+    url(r'^edit/$', views.editnews, name='edit'),
+    url(r'^getnews/$', views.getNews),
+
 ]

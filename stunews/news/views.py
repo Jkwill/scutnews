@@ -1,16 +1,58 @@
 # coding: utf-8
 from django.shortcuts import render
+from django.http import HttpResponse
+from .models import News
+import json
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
-from news.models import News
-
+class Base(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Base, self).dispatch(request, *args, **kwargs)
 
 def newslists(request):
-    length = News.objects.count()
-    if length > 20:
-        news_list = News.objects.all()[length-20:length]
+
+    all_news = News.objects.all()
+    news_list=[]
+    for i in all_news[::-1]:
+        news_list.append(i)
+    if len(all_news) > 5:
+        for i in all_news[::-1]:
+            if len(news_list) <= 5:
+                news_list.append(i)
+
     else:
-        news_list = News.objects.all()
+        for i in all_news[::-1]:
+            news_list = News.objects.all()
+
     return render(request, 'newslists.html', {'news_lists': news_list})
+
+class Result(dict):
+    """
+    {
+        key1 : value1,
+        key2 : value2,
+        statuscode : 1,
+    }
+    """
+
+    def __init__(self):
+        super(Result, self).__init__()
+        self["statuscode"] = -1
+
+    def setOK(self):
+        self["statuscode"] = 0
+
+    def setStatuscode(self, status):
+        self["statuscode"] = status
+
+    def setData(self, key, value):
+        self[key] = value
+
+    def setStatusCode(self, status_code):
+        self["statuscode"] = status_code
 
 
 def news(request, news_id):
@@ -20,3 +62,16 @@ def news(request, news_id):
 
 def editnews(request):
     return render(request, 'edit/edit.html')
+
+@csrf_exempt
+def getNews(request):
+    result = Result()
+    all_news = News.objects.all()
+    if len(all_news):
+        result.setData("news", [])
+
+    for news in all_news[::-1]:
+        result['news'].append({'id':news.id,'title':news.title})
+    result.setOK()
+    return HttpResponse(json.dumps(result))
+

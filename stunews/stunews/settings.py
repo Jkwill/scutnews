@@ -25,7 +25,23 @@ SECRET_KEY = 'zvrz05ss)x@to!ou&ay5+f)7ak7o@8wfq&vq-i%d8mj4$0)_0r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+
+
+# Application definition
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Credentials'
+)
 
 
 # Application definition
@@ -38,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'stunews.urls'
@@ -83,6 +102,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'forever',
         'HOST': '119.29.133.102',
+        #'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -125,3 +145,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+MEDIA_URL = 'news/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from news.models import News
-from news.models import Section
-from news.models import Source
+from .models import News
+from .models import Section
+from .models import Source
 admin.site.register(News)
 admin.site.register(Section)
 admin.site.register(Source)
