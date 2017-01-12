@@ -31,9 +31,9 @@ class Source(models.Model):
         return self.name
 
 
-class Image(models.Model):
-    mid = models.ForeignKey(News)
-    image = models.ImageField()
-
-    def __str__(self):
-         return self.image
+# class Image(models.Model):
+#     mid = models.ForeignKey(News)
+#     # image = models.ImageField()
+#
+#     def __str__(self):
+#          return self.image

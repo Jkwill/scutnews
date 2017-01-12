@@ -66,12 +66,20 @@ def editnews(request):
 @csrf_exempt
 def getNews(request):
     result = Result()
+    page = json.loads(request.body.decode()).get('page')
+    print(page)
+
     all_news = News.objects.all()
+    temp=[]
+
     if len(all_news):
         result.setData("news", [])
 
-    for news in all_news[::-1]:
-        result['news'].append({'id':news.id,'title':news.title})
+        for newsList in all_news[::-1]:
+            temp.append({'id':newsList.id,'title':newsList.title})
+
+        for i in range((page-1)*10,page*10):
+            result['news'].append({'id':temp[i]['id'],'title':temp[i]['title']})
     result.setOK()
     return HttpResponse(json.dumps(result))
 
