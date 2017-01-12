@@ -76,10 +76,17 @@ def getNews(request):
         result.setData("news", [])
 
         for newsList in all_news[::-1]:
-            temp.append({'id':newsList.id,'title':newsList.title})
+            # temp.append({'id':newsList.id,'title':newsList.title,'tag':newsList.tag,'date':newsList.subdate,'readnum':newsList.readnum})
+            temp.append({'id': newsList.id, 'title': newsList.title ,'date':str(newsList.subdate).split('+')[0]})
+        endNum=page*10
 
-        for i in range((page-1)*10,page*10):
-            result['news'].append({'id':temp[i]['id'],'title':temp[i]['title']})
+        if len(all_news)<page*10:
+            endNum=len(all_news)
+
+        for i in range((page-1)*10,endNum):
+            # result['news'].append({'id':temp[i]['id'],'title':temp[i]['title'],'tag':temp[i]['tag'],'date':temp[i]['date'],'readnum':temp[i]['readnum']})
+            result['news'].append({'id': temp[i]['id'], 'title': temp[i]['title'],'date':temp[i]['date']})
+
     result.setOK()
     return HttpResponse(json.dumps(result))
 
